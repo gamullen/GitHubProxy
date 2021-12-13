@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "HttpTrigger3": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --pause-on-error --port 6666",
+      "launchBrowser": true
+    }
+  }
+}
