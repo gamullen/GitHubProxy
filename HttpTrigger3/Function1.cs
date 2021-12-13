@@ -13,7 +13,7 @@ using Azure.Identity;
 
 namespace Gary.Function
 {
-    // This function acts as a proxy between the Azure portal and GitHub to allow private repos to be exposed.
+    // This function acts as a proxy between the Azure portal and GitHub to allow private repos to be exposed for resource creation.
     public static class HttpTrigger
     {
         [FunctionName("HttpTrigger")]
