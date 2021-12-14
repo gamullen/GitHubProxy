@@ -31,11 +31,11 @@ namespace Gary.Function
             log.LogInformation("kvClient = " + kvClient.ToString());
             KeyVaultSecret secret = kvClient.GetSecret(secretName);
 
-            string githubURI = null;
+            string gitHubURL = null;
             Exception error = null;
             try
             {
-                githubURI = req.Query["githuburi"];
+                gitHubURL = req.Query["gitHubURL"];
                 {
                     string githubAccessToken = secret.Value; 
 
@@ -44,7 +44,7 @@ namespace Gary.Function
                     client.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3.raw");
                     client.DefaultRequestHeaders.Add("Authorization", strAuthHeader);
 
-                    Stream stream = await client.GetStreamAsync(githubURI);
+                    Stream stream = await client.GetStreamAsync(gitHubURL);
                     StreamReader reader = new StreamReader(stream);
                     code = reader.ReadToEnd();
                 }
@@ -68,7 +68,7 @@ namespace Gary.Function
                     errorMessage = error.Message;
                 }
 
-                result = new BadRequestObjectResult(errorMessage + ", URL passed in = " + githubURI);
+                result = new BadRequestObjectResult(errorMessage + ", URL passed in = " + gitHubURL);
             }
 
             return result;
