@@ -29,27 +29,34 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Net.Http;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Extensions.Logging;
+using Microsoft.Azure.WebJobs;
 using Microsoft.AspNetCore.Mvc;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using Azure.Identity;
+using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Azure.Functions.Worker;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Gary.Function
 {
     // This function acts as a proxy between the Azure portal and GitHub to allow private repos to be exposed for resource creation.
-    public static class HttpTrigger
+    public class HttpTrigger
     {
+        private readonly ILogger<HttpTrigger> log;
+        private static string errorMessage = null;
+
+        public HttpTrigger(ILogger<HttpTrigger> logger)
+        {
+            log = logger;
+        }
+
         [Function("HttpTrigger")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-            ILogger log)
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req)
         {
             string secretName = "GitHubToken";
-            string errorMessage = null;
 
             log.LogInformation("C# HTTP trigger function processed a request.");
             string code = null;
@@ -57,7 +64,15 @@ namespace Gary.Function
             string keyVaultURL = "https://keyvaultgary.vault.azure.net/";
             var kvClient = new SecretClient(new Uri(keyVaultURL), new DefaultAzureCredential());
             log.LogInformation("kvClient = " + kvClient.ToString());
-            KeyVaultSecret secret = kvClient.GetSecret(secretName);
+            KeyVaultSecret secret = null;
+            try
+            {
+                secret = kvClient.GetSecret(secretName);
+            } catch (Exception ex)
+            {
+                log.LogError(ex.Message);
+                log.LogError(ex.StackTrace);
+            }
 
             string gitHubURL = null;
 
@@ -66,7 +81,7 @@ namespace Gary.Function
                 gitHubURL = req.Query["gitHubURL"];
 
                 if (null == validateGitHubURL(gitHubURL))
-                { 
+                {
                     {
                         string githubAccessToken = secret.Value;
 
@@ -84,6 +99,7 @@ namespace Gary.Function
             catch (Exception e)
             {
                 errorMessage = e.Message;
+                log.LogInformation($"Error: {errorMessage}");  
                 // empty code var will signal error
             }
 
@@ -102,8 +118,6 @@ namespace Gary.Function
 
         private static string validateGitHubURL(string url)
         {
-            string errorMessage = null;
-
             if (null == url)
             {
                 errorMessage = "Null gitHubURL parameter.";

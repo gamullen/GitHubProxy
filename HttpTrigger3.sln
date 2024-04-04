@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpTrigger3", "HttpTrigger
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE42A1A9-E60F-4BEE-9C8B-F2F756F1C4E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gitHubProxy", "gitHubProxy\gitHubProxy.csproj", "{556BA84C-4862-4512-93EC-83D980DC9DC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeleteMe", "DeleteMe\DeleteMe.csproj", "{2EE60350-D70D-43C1-AF06-CB6EF2D71DC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +21,14 @@ Global
 		{9F47F2BA-3957-439D-A037-356895777A2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F47F2BA-3957-439D-A037-356895777A2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F47F2BA-3957-439D-A037-356895777A2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{556BA84C-4862-4512-93EC-83D980DC9DC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{556BA84C-4862-4512-93EC-83D980DC9DC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{556BA84C-4862-4512-93EC-83D980DC9DC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{556BA84C-4862-4512-93EC-83D980DC9DC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EE60350-D70D-43C1-AF06-CB6EF2D71DC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EE60350-D70D-43C1-AF06-CB6EF2D71DC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EE60350-D70D-43C1-AF06-CB6EF2D71DC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EE60350-D70D-43C1-AF06-CB6EF2D71DC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
