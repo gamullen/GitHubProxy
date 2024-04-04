@@ -80,7 +80,8 @@ namespace Gary.Function
             {
                 gitHubURL = req.Query["gitHubURL"];
 
-                if (null == validateGitHubURL(gitHubURL))
+                errorMessage = validateGitHubURL(gitHubURL);
+                if (null == errorMessage)
                 {
                     {
                         string githubAccessToken = secret.Value;
@@ -94,7 +95,7 @@ namespace Gary.Function
                         StreamReader reader = new StreamReader(stream);
                         code = reader.ReadToEnd();
                     }
-                }
+                } 
             }
             catch (Exception e)
             {
@@ -118,16 +119,18 @@ namespace Gary.Function
 
         private static string validateGitHubURL(string url)
         {
+            string error = null;
+
             if (null == url)
             {
-                errorMessage = "Null gitHubURL parameter.";
+                error = "Null gitHubURL parameter.";
             }
             else if (!url.StartsWith("https://raw.githubusercontent.com/"))
             {
-                errorMessage = "Invalid gitHubURL parameter, must point to 'https://raw.githubusercontent.com'";
+                error = "Invalid gitHubURL parameter, must point to 'https://raw.githubusercontent.com'";
             }
 
-            return errorMessage;
+            return error;
         }
     }
 }
